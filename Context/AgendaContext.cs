@@ -14,6 +14,6 @@ namespace TodoApi.Context
 
         }
 
-        public DbSet<Contato> Contatos { get; set; }
+        public DbSet<Contato> Contatos { get; set; } // E reconhecida como uma tabela
     }
 }

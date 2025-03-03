@@ -17,13 +17,15 @@ namespace TodoApi.Controllers
         {
             _context = context;
         }
+
         [HttpPost("AdicionarContato")]
         public IActionResult Create(Contato contato)
         {
             _context.Add(contato); // Adiciona o contato na lista
             _context.SaveChanges(); // Salva as alterações
-            return CreatedAtAction("GetContato", new { id = contato.Id }, contato); // Retorna a resposta com o contato criado
+            return CreatedAtAction(nameof(ObterPorId), new { id = contato.Id }, contato); // Retorna a resposta com o contato criado
         }
+
         [HttpGet("ObterPorId/{id}")]
         public IActionResult ObterPorId(int id)
         {
@@ -36,6 +38,13 @@ namespace TodoApi.Controllers
 
             return Ok(contato);
         }
+        [HttpGet("ObterPorNome/{nome}")]
+        public IActionResult ObterPorNome(string nome)
+        {
+            var contatos = _context.Contatos.Where(x => x.Nome.Contains(nome));
+            return Ok(contatos);
+        }
+
         [HttpPut("Atualizar/{id}")]
         public IActionResult Atualizar(int id, Contato contato)
         {
@@ -55,6 +64,7 @@ namespace TodoApi.Controllers
 
             return Ok(contatoBanco);
         }
+
         [HttpDelete("Deletar/{id}")]
         public IActionResult Deletar(int id)
         {
